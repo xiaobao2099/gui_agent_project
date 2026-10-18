@@ -1,0 +1,24 @@
+﻿# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# pytest cache
+.pytest_cache/
+.coverage
+
+# Output image / log
+*.png
+*.jpg
+*.log
+output/
+model_cache/
+
+# IDE
+.idea/
+.vscode/
