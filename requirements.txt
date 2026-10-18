@@ -1,0 +1,9 @@
+python==3.11
+mss
+pillow
+paddlepaddle
+pyautogui
+pynput
+pyperclip
+pytest
+numpy
