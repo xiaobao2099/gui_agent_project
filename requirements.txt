@@ -1,9 +1,10 @@
+# 桌面感知与动作执行模块 依赖清单，Python3.11
 python==3.11
-mss
-pillow
-paddlepaddle
-pyautogui
-pynput
-pyperclip
-pytest
-numpy
+mss==9.0.1
+pillow==10.4.0
+paddlepaddle==2.6.1
+pyautogui==0.9.54
+pynput==1.7.7
+pyperclip==1.8.2
+pytest==8.3.3
+numpy==1.26.4
