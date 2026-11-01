@@ -1,75 +1,58 @@
-﻿# ========== Python 虚拟环境 ==========
+# ========== Python 虚拟环境 ==========
 venv/
 .venv/
 env/
+.env
 
 # ========== Python 缓存、编译文件 ==========
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
 build/
-develop-eggs/
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
 *.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
 
 # ========== pytest & 覆盖率 ==========
 .pytest_cache/
 htmlcov/
 .coverage
-.coverage.*
 coverage.xml
 
 # ========== 日志、临时文件 ==========
 *.log
 logs/
 tmp/
-temp/
 *.tmp
 *.bak
-*.swp
-*.swo
 
-# ========== 数据集、模型权重（大文件不上git） ==========
+# ========== 数据集、模型权重 ==========
 dataset/
 weights/
 checkpoints/
+models/
 *.bin
 *.safetensors
 *.pt
 *.pth
+*.gguf
+
+# ========== 截图、压缩包 ==========
+*.png
+*.jpg
+*.jpeg
+*.zip
 
 # ========== OCR、缓存模型 ==========
 ~/.paddleocr/
 paddleocr/
 
-# ========== 截图、报告产物（如果你不想提交截图就放开；要提交截图就注释这行） ==========
-# docs/screenshot/*.png
-
-# ========== IDE 配置 ==========
+# ========== IDE / OS 垃圾 ==========
 .vscode/
 .idea/
-*.iml
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-
-# ========== OS 系统垃圾 ==========
 .DS_Store
 Thumbs.db
 
 # ========== 输出目录 ==========
 outputs/
+output_lora/
