@@ -1,0 +1,5 @@
+{"task":"打开记事本并输入你好世界","history":[],"action":"hotkey win+r","image":"img_0.png"}
+{"task":"打开记事本并输入你好世界","history":["hotkey win+r"],"action":"type notepad","image":"img_1.png"}
+{"task":"打开记事本并输入你好世界","history":["hotkey win+r","type notepad"],"action":"hotkey enter","image":"img_2.png"}
+{"task":"打开记事本并输入你好世界","history":["hotkey win+r","type notepad","hotkey enter"],"action":"type 你好世界","image":"img_3.png"}
+{"task":"打开记事本并输入你好世界","history":["hotkey win+r","type notepad","hotkey enter","type 你好世界"],"action":"done","image":"img_4.png"}

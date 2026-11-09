@@ -1,0 +1,197 @@
+{
+  "summary": {
+    "total": 20,
+    "passed": 20,
+    "failed": 0,
+    "pass_rate": 100.0,
+    "error_rate": 0.0,
+    "avg_ms": 37.21,
+    "max_ms": 615.65,
+    "min_ms": 0.02,
+    "total_ms": 744.22,
+    "executed_at": "2026-11-09 18:34:52",
+    "env": "Python 3.12.11 / linux / Xvfb"
+  },
+  "cases": [
+    {
+      "id": "AC-01",
+      "category": "感知",
+      "name": "DPI 缩放因子获取",
+      "expected": "非 Windows 平台兜底返回 1.0，不抛异常",
+      "passed": true,
+      "elapsed_ms": 0.02,
+      "error": ""
+    },
+    {
+      "id": "AC-02",
+      "category": "感知",
+      "name": "全屏截图捕获",
+      "expected": "返回 RGB 图像且尺寸与显示器一致",
+      "passed": true,
+      "elapsed_ms": 11.69,
+      "error": ""
+    },
+    {
+      "id": "AC-03",
+      "category": "感知",
+      "name": "mock 模式不加载 OCR 模型",
+      "expected": "reader 为 None，run_ocr 返回空列表",
+      "passed": true,
+      "elapsed_ms": 0.36,
+      "error": ""
+    },
+    {
+      "id": "AC-04",
+      "category": "感知",
+      "name": "OCR 置信度过滤",
+      "expected": "confidence < 0.6 的识别框被丢弃",
+      "passed": true,
+      "elapsed_ms": 0.41,
+      "error": ""
+    },
+    {
+      "id": "AC-05",
+      "category": "感知",
+      "name": "OCR 小尺寸框过滤",
+      "expected": "宽或高小于 8 像素的噪声框被丢弃",
+      "passed": true,
+      "elapsed_ms": 0.24,
+      "error": ""
+    },
+    {
+      "id": "AC-06",
+      "category": "感知",
+      "name": "OCR 结果框绘制与落盘",
+      "expected": "输出标注图片文件且非空",
+      "passed": true,
+      "elapsed_ms": 11.49,
+      "error": ""
+    },
+    {
+      "id": "AC-07",
+      "category": "动作",
+      "name": "物理像素→逻辑像素坐标换算",
+      "expected": "DPI=1.0 时坐标原样返回",
+      "passed": true,
+      "elapsed_ms": 5.62,
+      "error": ""
+    },
+    {
+      "id": "AC-08",
+      "category": "动作",
+      "name": "点击动作参数传递",
+      "expected": "鼠标定位到换算后坐标并单击 1 次",
+      "passed": true,
+      "elapsed_ms": 5.03,
+      "error": ""
+    },
+    {
+      "id": "AC-09",
+      "category": "动作",
+      "name": "中文文本输入经剪贴板",
+      "expected": "文本写入剪贴板后以 Ctrl+V 粘贴",
+      "passed": true,
+      "elapsed_ms": 18.81,
+      "error": ""
+    },
+    {
+      "id": "AC-10",
+      "category": "动作",
+      "name": "组合快捷键执行",
+      "expected": "hotkey 按顺序传入 ctrl,c",
+      "passed": true,
+      "elapsed_ms": 4.39,
+      "error": ""
+    },
+    {
+      "id": "AC-11",
+      "category": "动作",
+      "name": "高危动作关键词拦截",
+      "expected": "type 含 rm 等关键词抛 RuntimeError",
+      "passed": true,
+      "elapsed_ms": 4.94,
+      "error": ""
+    },
+    {
+      "id": "AC-12",
+      "category": "动作",
+      "name": "未知动作类型拒绝",
+      "expected": "不在协议内的动作抛 NotImplementedError",
+      "passed": true,
+      "elapsed_ms": 4.51,
+      "error": ""
+    },
+    {
+      "id": "AC-13",
+      "category": "调度",
+      "name": "三类意图规划映射",
+      "expected": "点击/回车/输入分别映射到 click、hotkey、type",
+      "passed": true,
+      "elapsed_ms": 25.44,
+      "error": ""
+    },
+    {
+      "id": "AC-14",
+      "category": "调度",
+      "name": "空规划终止循环",
+      "expected": "无匹配意图时规划为空且单轮即停",
+      "passed": true,
+      "elapsed_ms": 13.72,
+      "error": ""
+    },
+    {
+      "id": "AC-15",
+      "category": "调度",
+      "name": "多轮循环上限保护",
+      "expected": "长任务最多执行 max_round 轮",
+      "passed": true,
+      "elapsed_ms": 13.31,
+      "error": ""
+    },
+    {
+      "id": "AC-16",
+      "category": "调度",
+      "name": "工具路由返回结构",
+      "expected": "每条执行结果含 tool/args/ret 且 status=ok",
+      "passed": true,
+      "elapsed_ms": 8.15,
+      "error": ""
+    },
+    {
+      "id": "AC-17",
+      "category": "鲁棒性",
+      "name": "复合指令长任务拆解",
+      "expected": "按连接词切成有序子任务，无连接词保持单条",
+      "passed": true,
+      "elapsed_ms": 0.3,
+      "error": ""
+    },
+    {
+      "id": "AC-18",
+      "category": "鲁棒性",
+      "name": "动作协议解析容错",
+      "expected": "合法格式解析成功，非法/残缺格式返回 None 不抛异常",
+      "passed": true,
+      "elapsed_ms": 0.03,
+      "error": ""
+    },
+    {
+      "id": "AC-19",
+      "category": "鲁棒性",
+      "name": "OCR 噪声文本过滤",
+      "expected": "空行、单字符、纯符号、重复行被剔除，正文保留",
+      "passed": true,
+      "elapsed_ms": 0.11,
+      "error": ""
+    },
+    {
+      "id": "AC-20",
+      "category": "鲁棒性",
+      "name": "界面差分阈值判定（真实截图）",
+      "expected": "跨窗口跳变判为已变化，窗口内文字输入判为无变化",
+      "passed": true,
+      "elapsed_ms": 615.65,
+      "error": ""
+    }
+  ]
+}

@@ -23,10 +23,8 @@ import io
 import re
 import sys
 import time
-import json
 import base64
 import logging
-import datetime
 import requests
 import ctypes
 
@@ -166,8 +164,6 @@ def screenshot_b64():
 # ============================ 动作解析(统一空格格式, 兼容旧变体) ============================
 def parse_action(text):
     text = text.strip()
-    if text.lower() == "done":
-        return {"action": "done", "x": 0, "y": 0, "text": ""}
     # 空格格式: hotkey win+r / type notepad / click 300,500
     parts = text.split(" ", 1)
     act = parts[0].lower()
@@ -179,8 +175,12 @@ def parse_action(text):
     if act == "scroll":
         return {"action": "scroll", "x": 0, "y": 0, "text": ""}
     if act == "click":
-        xy = arg.replace(" ", "").split(",")
-        return {"action": "click", "x": int(xy[0]), "y": int(xy[1]), "text": ""}
+        # 坐标容错: 模型可能输出 "click 300,500" 或残缺坐标, 解析失败返回 None 交由上层跳过
+        try:
+            x_str, y_str = arg.replace(" ", "").split(",")
+            return {"action": "click", "x": int(x_str), "y": int(y_str), "text": ""}
+        except (ValueError, IndexError):
+            return None
     if act == "done":
         return {"action": "done", "x": 0, "y": 0, "text": ""}
     return None

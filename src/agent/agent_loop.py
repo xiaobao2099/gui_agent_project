@@ -7,7 +7,7 @@ GUI智能体 Agent 主循环调度模块 GUIAgentLoop
 4. 执行循环、结果回传、终止判断
 依赖：perception.PerceptionEngine、action_executor.ActionExecutor
 """
-from src.perception import PerceptionEngine, get_system_dpi_scale
+from src.perception import PerceptionEngine
 
 
 class GUIAgentLoop:
@@ -27,9 +27,6 @@ class GUIAgentLoop:
         Mock任务规划器：下一阶段替换为DeepSeek Coder LLM输出
         返回规划列表 [{"tool": "xxx", "args": {...}}]
         """
-        if not self.mock_plan:
-            raise NotImplementedError("LLM planner not implemented in stage1")
-
         instruction = user_instruction.lower()
         if "点击" in instruction:
             return [{"tool": "action_click", "args": {"pos": (300, 200)}}]

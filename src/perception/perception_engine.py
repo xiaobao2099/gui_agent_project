@@ -3,10 +3,7 @@
 功能：跨平台截图、离线OCR识别、OCR噪声过滤、DPI缩放因子获取、UI框绘制
 全部本地运行，无公有云调用
 """
-import os
-import sys
 import platform
-import mss
 from mss import MSS
 import numpy as np
 from PIL import Image, ImageDraw

@@ -1,0 +1,58 @@
+# ========== Python 虚拟环境 ==========
+venv/
+.venv/
+env/
+.env
+
+# ========== Python 缓存、编译文件 ==========
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+build/
+dist/
+*.egg-info/
+
+# ========== pytest & 覆盖率 ==========
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# ========== 日志、临时文件 ==========
+*.log
+logs/
+tmp/
+*.tmp
+*.bak
+
+# ========== 数据集、模型权重 ==========
+dataset/
+weights/
+checkpoints/
+models/
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.gguf
+
+# ========== 截图、压缩包 ==========
+*.png
+*.jpg
+*.jpeg
+*.zip
+
+# ========== OCR、缓存模型 ==========
+~/.paddleocr/
+paddleocr/
+
+# ========== IDE / OS 垃圾 ==========
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ========== 输出目录 ==========
+outputs/
+output_lora/
