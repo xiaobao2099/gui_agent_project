@@ -1,10 +1,20 @@
-# 桌面感知与动作执行模块 依赖清单，Python3.11
-python==3.11
+# 依赖清单
+# 说明：本项目在 Python 3.11 / 3.12 验证通过。
+# Python 3.14 下 numpy 导入即抛 OverflowError（longdouble 溢出），且 paddlepaddle 无可用 wheel，需降级解释器。
+# 安装：pip install -r requirements.txt
+
 mss==9.0.1
 pillow==10.4.0
-paddlepaddle==2.6.1
+numpy==1.26.4
 pyautogui==0.9.54
 pynput==1.7.7
 pyperclip==1.8.2
+requests==2.32.3
 pytest==8.3.3
-numpy==1.26.4
+
+# 服务端另需：torch / transformers / peft / bitsandbytes / fastapi / uvicorn（见 README 私有化部署第 3 节）
+
+# OCR 可选：真实 OCR 走 easyocr（首次运行会下载模型）；未装时用 mock_ocr=True 跑测试
+# easyocr==1.7.2
+# 备选：paddlepaddle 系（Windows Python 3.14 无 wheel）
+# paddlepaddle==2.6.1

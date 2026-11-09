@@ -4,7 +4,7 @@
 全部本地运行，无公有云调用
 """
 import platform
-from mss import MSS
+import mss
 import numpy as np
 from PIL import Image, ImageDraw
 from typing import List, Dict
@@ -39,7 +39,7 @@ class PerceptionEngine:
         :param mock_ocr: True=单元测试mock模式，不加载easyocr、不联网下载模型
         """
         self.confidence_thresh = confidence_thresh
-        self.sct = MSS()
+        self.sct = mss.mss()
         self.dpi_scale = get_system_dpi_scale()
         self.mock_ocr = mock_ocr
         self.reader = None
@@ -50,7 +50,7 @@ class PerceptionEngine:
             self.reader = easyocr.Reader(['ch_sim','en'], gpu=False)
 
     def capture_screen(self, monitor_idx: int = 1) -> Image.Image:
-        """捕获屏幕，返回PIL RGB图像（物理像素）"""
+        """捕获屏幕，返回PIL RGB 图像（物理像素，非逻辑像素）"""
         monitor = self.sct.monitors[monitor_idx]
         shot = self.sct.grab(monitor)
         img = Image.frombytes("RGB", shot.size, shot.bgra, "raw", "BGRX")

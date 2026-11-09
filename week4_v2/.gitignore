@@ -17,6 +17,7 @@ dist/
 .pytest_cache/
 htmlcov/
 .coverage
+.cov_comb
 coverage.xml
 
 # ========== 日志、临时文件 ==========
@@ -56,3 +57,7 @@ Thumbs.db
 # ========== 输出目录 ==========
 outputs/
 output_lora/
+
+# ========== 例外：需要入库的图片 ==========
+!test_artifacts/*.png
+!data/realdata/*.png

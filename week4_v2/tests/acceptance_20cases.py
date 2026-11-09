@@ -26,17 +26,20 @@ sys.path.insert(0, ROOT)
 # Linux 侧导入垫片：client_v2.0.py 面向 Win11，模块级调用了 ctypes.windll
 # 与 GetSystemMetrics。此处只补齐这两个符号，使其可被导入并做逻辑级验收。
 # ---------------------------------------------------------------- #
-class _FakeUser32:
-    @staticmethod
-    def SetProcessDPIAware():
-        return True
+# 仅在非 Windows 平台注入；Windows 上 ctypes.windll 是真的，
+# 一旦覆盖会导致 pyautogui 依赖的 MessageBoxW 等符号丢失。
+if sys.platform != "win32":
 
-    @staticmethod
-    def GetSystemMetrics(index):
-        return 1920 if index == 0 else 1080
+    class _FakeUser32:
+        @staticmethod
+        def SetProcessDPIAware():
+            return True
 
+        @staticmethod
+        def GetSystemMetrics(index):
+            return 1920 if index == 0 else 1080
 
-ctypes.windll = types.SimpleNamespace(user32=_FakeUser32)
+    ctypes.windll = types.SimpleNamespace(user32=_FakeUser32)
 
 from PIL import Image  # noqa: E402
 
@@ -66,11 +69,15 @@ def case(cid, category, name, expected):
 # ---------------------------------------------------------------- #
 # A 组：桌面感知（AC-01 ~ AC-06）
 # ---------------------------------------------------------------- #
-@case("AC-01", "感知", "DPI 缩放因子获取", "非 Windows 平台兜底返回 1.0，不抛异常")
+@case("AC-01", "感知", "DPI 缩放因子获取", "返回合法缩放因子：非 Windows 为 1.0，Windows 为常见缩放假值")
 def ac01():
     scale = get_system_dpi_scale()
     assert isinstance(scale, float), "返回值类型应为 float"
-    assert scale == 1.0, f"Linux 下应为 1.0，实际 {scale}"
+    if sys.platform == "win32":
+        # Windows 上取真实缩放值，常见为 100%/125%/150%/175%/200%
+        assert scale in (1.0, 1.25, 1.5, 1.75, 2.0), f"Windows 缩放值异常：{scale}"
+    else:
+        assert scale == 1.0, f"非 Windows 应兜底为 1.0，实际 {scale}"
 
 
 @case("AC-02", "感知", "全屏截图捕获", "返回 RGB 图像且尺寸与显示器一致")
@@ -310,7 +317,14 @@ def ac19():
 
 @case("AC-20", "鲁棒性", "界面差分阈值判定（真实截图）", "跨窗口跳变判为已变化，窗口内文字输入判为无变化")
 def ac20():
-    real_dir = os.path.join(os.path.dirname(os.path.dirname(ROOT)), "realdata")
+    # 优先用工程内自带的 data/realdata，其次回退到工程外层的 realdata，
+    # 保证工程整体拷贝到别的机器后用例仍可跑
+    candidates = [
+        os.path.join(ROOT, "data", "realdata"),
+        os.path.join(os.path.dirname(ROOT), "realdata"),
+    ]
+    real_dir = next((d for d in candidates
+                     if os.path.exists(os.path.join(d, "img_0.png"))), candidates[0])
     p0 = os.path.join(real_dir, "img_0.png")
     p1 = os.path.join(real_dir, "img_1.png")
     p2 = os.path.join(real_dir, "img_2.png")
@@ -372,7 +386,7 @@ def main():
         "avg_ms": avg_ms, "max_ms": max_ms, "min_ms": min_ms,
         "total_ms": round(elapsed_all, 2),
         "executed_at": time.strftime("%Y-%m-%d %H:%M:%S"),
-        "env": f"Python {sys.version.split()[0]} / {sys.platform} / Xvfb",
+        "env": f"Python {sys.version.split()[0]} / {sys.platform}",
     }
 
     print("-" * 78)
