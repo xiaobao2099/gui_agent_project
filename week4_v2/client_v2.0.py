@@ -37,10 +37,10 @@ from pynput.keyboard import Key
 
 # ============================ 配置区(可替换) ============================
 # 推理服务地址: 部署到企业内网后仅需改此处, 例如 http://192.168.x.x:6006/chat
-SERVER_URL = "https://u1145783-vrdd-4e26273a.weste.seetacloud.com:8443/chat"
+SERVER_URL = "https://127.0.0.1:6006/chat"
 
 # --- 安全白名单: 只允许向这些域名/地址发请求, 防止误连外网 ---
-ALLOWED_HOSTS = ["u1145783-vrdd-4e26273a.weste.seetacloud.com", "127.0.0.1", "localhost", "192.168."]
+ALLOWED_HOSTS = ["127.0.0.1", "127.0.0.1", "localhost", "192.168."]
 # --- 动作白名单: 模型输出不在此列直接拒绝, 杜绝任意命令/路径执行 ---
 ALLOWED_ACTIONS = {"hotkey", "type", "click", "scroll", "done"}
 
