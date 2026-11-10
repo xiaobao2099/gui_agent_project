@@ -56,3 +56,5 @@ Thumbs.db
 # ========== 输出目录 ==========
 outputs/
 output_lora/
+~$*
+*.tmp
