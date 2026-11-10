@@ -1,9 +1,8 @@
-﻿"""
+"""
 全链路集成测试：感知 -> Agent规划 -> 工具输出
 用例ID：IN-001 ~ IN-005
 """
 from src.agent import GUIAgentLoop
-from src.perception import PerceptionEngine
 
 def test_integration_single_round():
     # IN-001 单轮完整链路

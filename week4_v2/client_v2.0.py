@@ -14,7 +14,8 @@
        - OCR 文本噪声过滤(接口预留, 当前无 OCR 引擎也可运行)
        - 安全层: 出站请求白名单 + 动作白名单 + 本地日志, 不向外发送文件内容
 依赖: pip install mss pillow requests pynput
-运行: python client_v2.0.py
+运行: python client_v2.0.py            正常模式, 走 GPU 推理服务
+      python client_v2.0.py --offline    离线演示模式, 不联网, 走规则兜底序列(仅用于无服务环境下录制演示)
 ================================================================================
 """
 
@@ -256,8 +257,25 @@ def do_action(action):
     return False
 
 
-def run_subtask(subtask, global_history):
+def run_subtask(subtask, global_history, offline=False):
     history = list(global_history)
+
+    # ---- 离线演示模式: 不发任何请求, 直接按关键词规则执行 ----
+    # 仅用于推理服务不可达时录制端到端演示; 日志会显式标注, 不冒充模型决策
+    if offline:
+        seq = fallback_actions(subtask)
+        if not seq:
+            log.warning("离线模式未匹配到规则动作, 跳过子任务: %s", subtask)
+            return history
+        log.warning("离线演示模式: 跳过推理请求, 规则兜底序列 = %s",
+                    [a.get("text") or a.get("action") for a in seq])
+        for a in seq:
+            if a.get("action") == "done":
+                break
+            do_action(a)
+            history.append(f"{a.get('action')} {a.get('text','')}".strip())
+        return history
+
     for step in range(MAX_ROUNDS_PER_SUBTASK):
         log.info("---- 子任务[%s] 第%d轮 ----", subtask, step + 1)
         img_b64 = screenshot_b64()
@@ -303,6 +321,9 @@ def run_subtask(subtask, global_history):
 
 # ============================ 主流程 ============================
 def main():
+    offline = "--offline" in sys.argv
+    if offline:
+        log.warning("==== 离线演示模式(规则兜底, 非模型自主决策, 不发送任何推理请求) ====")
     task = input("请输入任务: ").strip()
     if not task:
         return
@@ -312,7 +333,7 @@ def main():
     global_history = []
     for sub in subtasks:
         log.info("==== 开始子任务: %s ====", sub)
-        global_history = run_subtask(sub, global_history)
+        global_history = run_subtask(sub, global_history, offline=offline)
     log.info("全部子任务执行结束。")
 
 

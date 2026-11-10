@@ -1,4 +1,4 @@
-﻿"""
+"""
 动作执行模块 ActionExecutor 单元测试
 用例ID：A-001 ~ A-006
 规避pyautogui键鼠中断，普通Mock，不使用spec强约束

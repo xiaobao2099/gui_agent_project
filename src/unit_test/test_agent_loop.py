@@ -1,4 +1,4 @@
-﻿"""
+"""
 Agent调度模块 GUIAgentLoop 单元测试
 用例ID：AG-001 ~ AG-007
 """

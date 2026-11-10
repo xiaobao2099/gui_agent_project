@@ -1,4 +1,4 @@
-﻿"""
+"""
 感知模块 PerceptionEngine 单元测试
 用例ID：P-001 ~ P-006
 """
